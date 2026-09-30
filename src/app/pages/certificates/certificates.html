@@ -1,0 +1,71 @@
+<app-page-intro
+  heading="Zertifikate & Weiterbildungen"
+  lead="Wer Katzen ernährungsphysiologisch berät, muss auf dem aktuellen Stand bleiben. Hier sehen Sie jederzeit, welche Fortbildungen ich abgeschlossen habe."
+/>
+
+<section class="section milestones" aria-labelledby="milestones-heading">
+  <div class="container">
+    <h2 id="milestones-heading" class="visually-hidden">Wichtigste Abschlüsse</h2>
+    <ul class="milestones__list">
+      @for (c of highlights; track c.date) {
+        <li>
+          <app-icon name="award" />
+          <div>
+            <span class="milestones__date">{{ c.dateLabel }}</span>
+            <h3>{{ c.title }}</h3>
+            <p>{{ c.by }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="section section--sage list" aria-labelledby="list-heading">
+  <div class="container">
+    <div class="list__head">
+      <h2 id="list-heading">Alle Fortbildungen</h2>
+      <p>{{ total }} Kurse, Webinare und Ausbildungen – die neuesten zuerst.</p>
+    </div>
+
+    @for (group of years; track group.year) {
+      <section class="year" [attr.aria-labelledby]="'y-' + group.year">
+        <h3 class="year__label" [id]="'y-' + group.year">{{ group.year }}</h3>
+        <ul class="year__items">
+          @for (c of group.items; track c.date + c.title) {
+            <li class="cert" [class.cert--highlight]="c.highlight">
+              <div class="cert__main">
+                <span class="cert__date">{{ c.dateLabel }}</span>
+                <h4>{{ c.title }}</h4>
+                <p>{{ c.by }}</p>
+              </div>
+              @if (c.href) {
+                <a class="cert__file" [href]="c.href" target="_blank" rel="noopener">
+                  <app-icon name="file" />
+                  Nachweis ({{ c.kind }})
+                  <span class="visually-hidden">: {{ c.title }}, öffnet in neuem Tab</span>
+                </a>
+              } @else {
+                <span class="cert__file cert__file--none">Teilnahme</span>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </div>
+</section>
+
+<section class="section more" aria-labelledby="more-heading">
+  <div class="container more__inner">
+    <h2 id="more-heading">Und die anderen Vierbeiner?</h2>
+    <p>
+      Mein Schwerpunkt liegt auf der Katze. Damit aber auch Hunde und Kleintiere bestens versorgt
+      sind, plane ich weitere Fortbildungen – gerade in kritischen Situationen will ich die richtige
+      Entscheidung treffen.
+    </p>
+    <a routerLink="/katzen-ernaehrungsberatung">Zur Ernährungsberatung für Katzen</a>
+  </div>
+</section>
+
+<app-cta-band />

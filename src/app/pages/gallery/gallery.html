@@ -1,0 +1,109 @@
+<app-page-intro
+  heading="Galerie meiner Schützlinge"
+  lead="Ein kleiner Einblick in die Tiere, die ich regelmäßig betreue. Soll Ihr Liebling auch hier erscheinen? Sprechen Sie mich einfach an."
+>
+  <div class="filters" role="group" aria-label="Galerie filtern">
+    <button
+      type="button"
+      class="filter"
+      [attr.aria-pressed]="filter() === 'alle'"
+      (click)="setFilter('alle')"
+    >
+      Alle <span class="filter__count">{{ total }}</span>
+    </button>
+    @for (c of categories; track c.id) {
+      <button
+        type="button"
+        class="filter"
+        [attr.aria-pressed]="filter() === c.id"
+        (click)="setFilter(c.id)"
+      >
+        {{ c.label }} <span class="filter__count">{{ counts[c.id] }}</span>
+      </button>
+    }
+  </div>
+</app-page-intro>
+
+<div class="container gallery">
+  <p class="visually-hidden" aria-live="polite">{{ visible().length }} Fotos angezeigt</p>
+
+  @for (section of sections(); track section.id) {
+    <section class="gallery__section" [attr.aria-labelledby]="'g-' + section.id">
+      <h2 [id]="'g-' + section.id">
+        {{ section.heading }}
+        <span class="gallery__count">{{ section.images.length }} Fotos</span>
+      </h2>
+      <ul class="gallery__grid">
+        @for (img of section.images; track img.src; let i = $index) {
+          <li>
+            <button
+              type="button"
+              class="gallery__item"
+              (click)="open(img)"
+              [attr.aria-label]="img.name + ' vergrößern'"
+            >
+              <app-pet-photo
+                [image]="img"
+                [tilt]="i % 3 === 0 ? -1.5 : i % 3 === 1 ? 1.2 : 0"
+                sizes="(min-width: 72rem) 17vw, (min-width: 48rem) 30vw, 45vw"
+              />
+            </button>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+
+  <p class="gallery__hint">
+    <app-icon name="paw" />
+    Sie sind Kundin oder Kunde und möchten ein Foto Ihres Tieres in der Galerie sehen?
+    <a routerLink="/kontakt">Schreiben Sie mir.</a>
+  </p>
+</div>
+
+<dialog #lightbox class="lightbox" aria-label="Foto-Ansicht">
+  @if (current(); as img) {
+    <figure class="lightbox__figure">
+      <div class="lightbox__stage">
+        @if (!currentFailed()) {
+          <img [src]="img.src" [alt]="currentAlt()" (error)="currentFailed.set(true)" />
+        } @else {
+          <div class="lightbox__missing" role="img" [attr.aria-label]="currentAlt()">
+            <app-icon name="paw" />
+            <span>Foto folgt</span>
+          </div>
+        }
+      </div>
+      <figcaption>
+        <strong>{{ img.name }}</strong>
+        <span>{{ index() + 1 }} / {{ visible().length }}</span>
+      </figcaption>
+    </figure>
+  }
+  <button
+    type="button"
+    class="lightbox__btn lightbox__close"
+    (click)="close()"
+    aria-label="Schließen"
+  >
+    <app-icon name="close" />
+  </button>
+  <button
+    type="button"
+    class="lightbox__btn lightbox__prev"
+    (click)="step(-1)"
+    aria-label="Vorheriges Foto"
+  >
+    <app-icon name="chevron-left" />
+  </button>
+  <button
+    type="button"
+    class="lightbox__btn lightbox__next"
+    (click)="step(1)"
+    aria-label="Nächstes Foto"
+  >
+    <app-icon name="chevron-right" />
+  </button>
+</dialog>
+
+<app-cta-band />

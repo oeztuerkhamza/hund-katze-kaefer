@@ -1,0 +1,43 @@
+<div class="container bar">
+  <a class="brand" routerLink="/">
+    <app-ladybug class="brand__bug" />
+    <span class="brand__text">
+      <span class="brand__name">Hund Katze Käfer</span>
+      <span class="brand__claim">Tierbetreuung Freiburg</span>
+    </span>
+  </a>
+
+  <button
+    type="button"
+    class="menu-toggle"
+    [attr.aria-expanded]="open()"
+    aria-controls="site-nav"
+    (click)="toggle()"
+  >
+    <app-icon [name]="open() ? 'close' : 'menu'" />
+    <span>Menü</span>
+  </button>
+
+  <nav id="site-nav" class="nav" aria-label="Hauptnavigation">
+    <ul class="nav__list">
+      @for (item of nav; track item.path) {
+        <li>
+          <a
+            class="nav__link"
+            [routerLink]="item.path"
+            routerLinkActive="is-active"
+            ariaCurrentWhenActive="page"
+            >{{ item.label }}</a
+          >
+        </li>
+      }
+    </ul>
+    <div class="nav__actions">
+      <a class="nav__phone" [href]="site.phone.href">
+        <app-icon name="phone" />
+        <span>{{ site.phone.display }}</span>
+      </a>
+      <a class="btn btn--primary nav__cta" routerLink="/kontakt">Kontakt</a>
+    </div>
+  </nav>
+</div>

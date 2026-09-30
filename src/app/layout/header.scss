@@ -1,0 +1,222 @@
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: block;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  min-height: 4.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-right: auto;
+  text-decoration: none;
+  color: var(--forest-deep);
+}
+
+.brand__bug {
+  width: 2.4rem;
+  height: 2.4rem;
+  rotate: -14deg;
+  transition: rotate 0.4s var(--ease-out);
+}
+
+.brand:hover .brand__bug {
+  rotate: 8deg;
+}
+
+.brand__text {
+  display: grid;
+  line-height: 1.1;
+}
+
+.brand__name {
+  font-family: var(--font-display);
+  font-weight: 750;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+}
+
+.brand__claim {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ── Mobile menu ─────────────────────────────────────────── */
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0.4rem 0.9rem 0.4rem 0.7rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--forest-deep);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nav {
+  display: none;
+}
+
+:host(.is-open) .nav {
+  position: absolute;
+  inset: 100% 0 auto;
+  display: grid;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--gutter) var(--space-l);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 24px 40px -24px rgb(30 43 37 / 0.35);
+  max-height: calc(100svh - 4.5rem);
+  overflow-y: auto;
+  animation: drop 0.25s var(--ease-out);
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+}
+
+.nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.nav__link {
+  display: block;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: var(--step-1);
+  color: var(--forest-deep);
+  text-decoration: none;
+
+  &.is-active {
+    color: var(--ladybug-deep);
+  }
+}
+
+.nav__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  align-items: center;
+}
+
+.nav__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  color: var(--forest-deep);
+  text-decoration: none;
+  white-space: nowrap;
+
+  app-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &:hover span {
+    text-decoration: underline;
+  }
+}
+
+/* ── Desktop ─────────────────────────────────────────────── */
+
+@media (min-width: 66rem) {
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav,
+  :host(.is-open) .nav {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    animation: none;
+    overflow: visible;
+    max-height: none;
+  }
+
+  .nav__list {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .nav__link {
+    position: relative;
+    padding: 0.5rem 0.7rem;
+    border: 0;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0.7rem;
+      right: 0.7rem;
+      bottom: 0.2rem;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--ladybug);
+      scale: 0 1;
+      transform-origin: left;
+      transition: scale 0.25s var(--ease-out);
+    }
+
+    &:hover::after,
+    &.is-active::after {
+      scale: 1 1;
+    }
+
+    &.is-active {
+      color: var(--forest-deep);
+    }
+  }
+
+  .nav__actions {
+    flex-wrap: nowrap;
+  }
+
+  .nav__cta {
+    min-height: 2.6rem;
+    padding-block: 0.5em;
+  }
+}
+
+@media (min-width: 66rem) and (max-width: 78rem) {
+  .nav__phone span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

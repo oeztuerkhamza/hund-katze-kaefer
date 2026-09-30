@@ -1,0 +1,117 @@
+<app-page-intro
+  heading="Cat Coaching – mehr als Ernährungsberatung"
+  lead="Artgerecht füttern, Krankheiten verstehen, gute Entscheidungen treffen: Ich begleite Sie und Ihre Katze – verständlich, individuell und zertifiziert."
+>
+  <div class="btn-row">
+    <a class="btn btn--primary" [href]="site.phone.href">
+      <app-icon name="phone" />
+      Beratung vereinbaren
+    </a>
+    <a class="btn btn--outline" routerLink="/zertifikate"
+      >{{ certificateCount }} Zertifikate ansehen</a
+    >
+  </div>
+</app-page-intro>
+
+<section class="section why" aria-labelledby="why-heading">
+  <div class="container why__grid">
+    <h2 id="why-heading">Warum „Coaching“?</h2>
+    <div class="prose">
+      <p>
+        Die Frage nach dem richtigen Futter ist oft nur der Anfang. Im Gespräch geht es schnell um
+        mehr – von der Wahl der Tierarztpraxis bis zum passenden Zubehör. Mein Wissen dazu teile ich
+        gern, deshalb nenne ich mein Angebot Cat Coaching.
+      </p>
+      <p>
+        Viele Katzenhalterinnen und Katzenhalter melden sich, wenn ihre Katze krank ist. In der
+        Tierarztpraxis bleibt oft wenig Zeit für ausführliche Erklärungen. Ich nehme mir diese Zeit
+        und erkläre zum Beispiel in einfachen Worten, was eine chronische Nierenerkrankung bedeutet
+        und worauf Sie bei der Fütterung achten sollten.
+      </p>
+      <p>
+        Ich weiß aus eigener Erfahrung, wie gut es tut, wenn jemand Möglichkeiten aufzeigt und
+        verständlich erklärt, worauf es ankommt.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sage audiences" aria-labelledby="audiences-heading">
+  <div class="container">
+    <h2 id="audiences-heading">Für wen die Beratung gedacht ist</h2>
+    <ul class="audiences__list">
+      @for (a of audiences; track a.title) {
+        <li>
+          <app-icon [name]="a.icon" />
+          <h3>{{ a.title }}</h3>
+          <p>{{ a.text }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="section focus" aria-labelledby="focus-heading">
+  <div class="container focus__grid">
+    <div class="focus__copy">
+      <h2 id="focus-heading">Mein Schwerpunkt: der Darm</h2>
+      <p>
+        Wiederkehrender Durchfall und andere Verdauungsprobleme begegnen mir sehr häufig. Oft werden
+        betroffene Katzen mit Antibiotika und einem Spezialfutter behandelt, weil eine
+        Unverträglichkeit vermutet wird – die Symptome verschwinden, die Ursache bleibt.
+      </p>
+      <p>
+        Deshalb habe ich mich auf den Darmaufbau spezialisiert. Gemeinsam suchen wir nach der
+        Ursache, denn ein gesundes Immunsystem braucht einen gesunden Darm.
+      </p>
+      <p class="focus__note">
+        <strong>Wichtig:</strong> Meine Beratung ersetzt nicht den Besuch in der Tierarztpraxis. Sie
+        ergänzt die tierärztliche Behandlung.
+      </p>
+    </div>
+    <aside class="focus__courses" aria-labelledby="courses-heading">
+      <h3 id="courses-heading">Aktuelle Fortbildungen zur Darmgesundheit</h3>
+      <ul>
+        @for (c of gutCourses; track c.date) {
+          <li>
+            <span class="focus__date">{{ c.dateLabel }}</span>
+            {{ c.title }}
+          </li>
+        }
+      </ul>
+      <a routerLink="/zertifikate">Alle Zertifikate</a>
+    </aside>
+  </div>
+</section>
+
+<section class="price section" aria-labelledby="price-heading">
+  <div class="container price__grid">
+    <div class="price__copy">
+      <h2 id="price-heading">Ablauf & Preis</h2>
+      <p>
+        Rufen Sie mich an und schildern Sie mir das Problem Ihrer Katze – oder vereinbaren Sie
+        direkt einen Beratungstermin. Nach dem Gespräch erhalten Sie eine schriftliche Ausarbeitung
+        mit meinen Empfehlungen.
+      </p>
+      <ul class="checklist">
+        <li><app-icon name="check" />Individuell auf Ihre Katze abgestimmt</li>
+        <li><app-icon name="check" />Schriftliche Ausarbeitung nach dem Gespräch</li>
+        <li>
+          <app-icon name="check" />Bei persönlicher Beratung zzgl.
+          {{ site.pricing.travelPerKm | currency: 'EUR' : 'symbol' : '1.2-2' }} pro gefahrenem
+          Kilometer
+        </li>
+      </ul>
+      <p class="price__academy">
+        Ausgebildet als Ernährungsberaterin für Katzen an der
+        <a [href]="site.links.academy" target="_blank" rel="noopener">Rolf-Schneider-Akademie</a>.
+      </p>
+    </div>
+    <app-price-tag />
+  </div>
+</section>
+
+<app-cta-band
+  heading="Erzählen Sie mir von Ihrer Katze"
+  text="Ein kurzes Telefonat reicht oft schon, um einzuschätzen, wie ich helfen kann."
+/>

@@ -1,0 +1,20 @@
+.legal {
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.prose h2:first-child {
+  margin-top: 0;
+}
+
+.legal__more {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.stand {
+  margin-top: var(--space-xl);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}

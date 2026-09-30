@@ -1,0 +1,136 @@
+<app-page-intro
+  heading="Leistungen & Preise"
+  lead="Von der täglichen Katzenbetreuung bis zur Ernährungsberatung: Das übernehme ich für Sie und Ihr Tier. Die Details besprechen wir persönlich."
+>
+  <nav class="jump" aria-label="Auf dieser Seite">
+    @for (s of services; track s.id) {
+      <a [routerLink]="[]" [fragment]="s.id">{{ s.title }}</a>
+    }
+    <a [routerLink]="[]" fragment="preise">Preise & AGB</a>
+    <a [routerLink]="[]" fragment="fragen">Häufige Fragen</a>
+  </nav>
+</app-page-intro>
+
+<div class="container">
+  @for (s of services; track s.id) {
+    <section class="service" [id]="s.id" [attr.aria-labelledby]="s.id + '-heading'">
+      <div class="service__head">
+        <app-icon [name]="s.icon" class="service__icon" />
+        <h2 [id]="s.id + '-heading'">{{ s.title }}</h2>
+      </div>
+      <div class="service__body">
+        <p>{{ s.body }}</p>
+        <ul class="checklist service__points">
+          @for (point of s.points; track point) {
+            <li><app-icon name="check" />{{ point }}</li>
+          }
+        </ul>
+        @if (s.id === 'ernaehrungsberatung') {
+          <p>
+            <a routerLink="/katzen-ernaehrungsberatung">Mehr zum Cat Coaching</a> ·
+            <a routerLink="/zertifikate">Meine Zertifikate</a>
+          </p>
+        }
+        @if (s.note) {
+          <p class="service__note"><strong>Bitte beachten:</strong> {{ s.note }}</p>
+        }
+      </div>
+    </section>
+  }
+
+  <section class="extras" aria-labelledby="extras-heading">
+    <h2 id="extras-heading">Weitere Leistungen rund um die Katze</h2>
+    <dl class="extras__list">
+      @for (e of extras; track e.title) {
+        <div>
+          <dt>{{ e.title }}</dt>
+          <dd>{{ e.text }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <section class="holiday" aria-labelledby="holiday-heading">
+    <app-icon name="key" class="holiday__icon" />
+    <div>
+      <h2 id="holiday-heading">Während Sie im Urlaub sind</h2>
+      <p>Wenn ich ohnehin bei Ihnen bin, übernehme ich gern auch diese kleinen Aufgaben:</p>
+      <ul class="holiday__list">
+        @for (h of holidayExtras; track h) {
+          <li>{{ h }}</li>
+        }
+      </ul>
+    </div>
+  </section>
+</div>
+
+<section id="preise" class="section section--sage prices" aria-labelledby="prices-heading">
+  <div class="container">
+    <h2 id="prices-heading">Preise</h2>
+    <div class="prices__grid">
+      <article class="price-card">
+        <h3>Tierbetreuung</h3>
+        <p class="price-card__value">Individuelles Angebot</p>
+        <p>
+          Umfang der Betreuung, Tierart und Anfahrt sind bei jedem Auftrag anders. Deshalb erhalten
+          Sie nach dem Kennenlernen ein persönliches Angebot, das genau zu Ihnen passt.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" routerLink="/kontakt" fragment="anfrage">Angebot anfragen</a>
+        </div>
+      </article>
+
+      <article class="price-card">
+        <h3>Ernährungsberatung für Katzen</h3>
+        <p class="price-card__value">
+          {{ site.pricing.consultationPerHalfHour | currency: 'EUR' : 'symbol' : '1.0-0' }}
+          <small>pro angefangene halbe Stunde</small>
+        </p>
+        <ul class="checklist">
+          <li>
+            <app-icon name="check" />zzgl. schriftliche Nachbereitung, in der Regel weitere 30
+            Minuten
+          </li>
+          <li>
+            <app-icon name="check" />bei persönlicher Beratung zzgl.
+            {{ site.pricing.travelPerKm | currency: 'EUR' : 'symbol' : '1.2-2' }} pro gefahrenem
+            Kilometer
+          </li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="downloads">
+      <a class="download" [href]="site.documents.terms" target="_blank" rel="noopener">
+        <app-icon name="file" />
+        <span>
+          <strong>AGB zur Haustierbetreuung</strong>
+          <small>PDF · öffnet in neuem Tab</small>
+        </span>
+      </a>
+      <a class="download" [href]="site.documents.inquiry" target="_blank" rel="noopener">
+        <app-icon name="file" />
+        <span>
+          <strong>Anfrageformular zum Ausfüllen</strong>
+          <small>PDF · alternativ zum Online-Formular</small>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="fragen" class="section faq" aria-labelledby="faq-heading">
+  <div class="container faq__grid">
+    <h2 id="faq-heading">Häufige Fragen</h2>
+    <div class="faq__list">
+      @for (item of faq; track item.q) {
+        <details name="faq">
+          <summary>{{ item.q }}</summary>
+          <p>{{ item.a }}</p>
+        </details>
+      }
+    </div>
+  </div>
+</section>
+
+<app-cta-band />

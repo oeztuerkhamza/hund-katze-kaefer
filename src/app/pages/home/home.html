@@ -1,0 +1,188 @@
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="hero__place">
+        <app-icon name="pin" />
+        Tierbetreuung in {{ site.serviceArea }}
+      </p>
+      <h1 id="hero-heading">
+        <span class="line">Ihr Tier bleibt zu Hause.</span>
+        <span class="line">Ich komme vorbei.</span>
+      </h1>
+      <p class="lead">
+        Wenn Sie verreisen, beruflich unterwegs sind oder einfach wenig Zeit haben, betreue ich
+        Hund, Katze und Kleintier in ihrer vertrauten Umgebung – zuverlässig, pünktlich und mit viel
+        Herz.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--primary" routerLink="/kontakt">Kennenlernen vereinbaren</a>
+        <a class="btn btn--outline" [href]="site.phone.href">
+          <app-icon name="phone" />
+          {{ site.phone.display }}
+        </a>
+      </div>
+      <ul class="hero__facts">
+        <li><app-icon name="shield" />Rundum versichert</li>
+        <li><app-icon name="receipt" />Steuerlich absetzbar</li>
+        <li><app-icon name="award" />Zertifizierte Ernährungsberaterin für Katzen</li>
+      </ul>
+    </div>
+
+    <div class="hero__wall">
+      @for (pet of heroPets; track pet.src; let i = $index) {
+        <app-pet-photo
+          class="hero__pet"
+          [image]="pet"
+          [tilt]="wall[i].tilt"
+          [priority]="i < 2"
+          [style.--i]="i"
+          sizes="(min-width: 64rem) 16vw, 30vw"
+        />
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section why" aria-labelledby="why-heading">
+  <div class="container why__grid">
+    <div class="why__intro">
+      <h2 id="why-heading">Zu Hause ist es am schönsten</h2>
+      <p>
+        Eine Tierpension ist für viele Tiere Stress, und bei Freunden fehlt oft das gewohnte Umfeld.
+        Deshalb komme ich zu Ihnen: Ihr Liebling behält seinen Alltag, und Sie haben den Kopf frei.
+      </p>
+      <p class="why__extras">
+        <strong>Nebenbei erledigt:</strong>
+        @for (extra of holidayExtras; track extra; let last = $last) {
+          {{ extra }}{{ last ? '.' : ', ' }}
+        }
+      </p>
+    </div>
+    <ul class="why__list">
+      @for (r of reasons; track r.title) {
+        <li>
+          <app-icon [name]="r.icon" />
+          <div>
+            <h3>{{ r.title }}</h3>
+            <p>{{ r.text }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="section section--sage services" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="services-heading">Was ich für Sie übernehme</h2>
+      <a routerLink="/leistungen">Alle Leistungen & Preise</a>
+    </div>
+    <ul class="services__list">
+      @for (s of careServices; track s.id) {
+        <li class="service">
+          <app-icon [name]="s.icon" class="service__icon" />
+          <h3>
+            <a [routerLink]="['/leistungen']" [fragment]="s.id">{{ s.title }}</a>
+          </h3>
+          <p>{{ s.summary }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="coaching" aria-labelledby="coaching-heading">
+  <div class="container coaching__grid">
+    <div class="coaching__copy">
+      <h2 id="coaching-heading">Ernährungsberatung für Katzen</h2>
+      <p>
+        Als zertifizierte Ernährungsberaterin für Katzen helfe ich Ihnen, Ihre Samtpfote artgerecht
+        zu füttern – mit einem Plan, der genau zu Ihrer Katze passt.
+      </p>
+      <ul class="checklist">
+        <li><app-icon name="check" />Für gesunde Katzen, damit sie es bleiben</li>
+        <li><app-icon name="check" />Bei Erkrankungen und speziellen Fütterungsplänen</li>
+        <li><app-icon name="check" />Zur Vorbereitung, bevor eine Katze bei Ihnen einzieht</li>
+      </ul>
+      <div class="btn-row">
+        <a class="btn btn--light" routerLink="/katzen-ernaehrungsberatung">Mehr zum Cat Coaching</a>
+        <a class="coaching__link" routerLink="/zertifikate">Zertifikate ansehen</a>
+      </div>
+    </div>
+    <app-price-tag />
+  </div>
+</section>
+
+<section class="section about" aria-labelledby="about-heading">
+  <div class="container about__grid">
+    <div class="about__cats">
+      @for (cat of ownPets; track cat.src; let i = $index) {
+        <app-pet-photo
+          [image]="cat"
+          [tilt]="i === 1 ? 3 : -3"
+          sizes="(min-width: 64rem) 14vw, 30vw"
+        />
+      }
+    </div>
+    <div class="about__copy">
+      <h2 id="about-heading">Hallo, ich bin Karin Käfer</h2>
+      <p>
+        Nach elf Jahren als Abteilungsleiterin in der Logistik habe ich meine Leidenschaft zum Beruf
+        gemacht: die Tiere. Geblieben ist das Organisationstalent: Zeiten werden eingehalten,
+        Absprachen gelten, und kein Tier wird vergessen.
+      </p>
+      <p>
+        Zu Hause warten Dexter, Lucy und Misu auf mich. Aufgewachsen bin ich mit Kaninchen,
+        Hamstern, Meerschweinchen, Vögeln, Katzen und Hunden.
+      </p>
+      <a class="btn btn--outline" routerLink="/ueber-mich">Mehr über mich</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sage steps" aria-labelledby="steps-heading">
+  <div class="container">
+    <h2 id="steps-heading">So einfach geht’s</h2>
+    <ol class="steps__list">
+      @for (step of steps; track step.title; let i = $index) {
+        <li>
+          <span class="steps__num" aria-hidden="true">{{ i + 1 }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.text }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="section gallery-teaser" aria-labelledby="gallery-heading">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2 id="gallery-heading">Über {{ clientPhotoCount }} Schützlinge im Fotoalbum</h2>
+        <p>Hunde, Katzen, Nager, Vögel, Geckos – sogar eine Ameisenkolonie war schon dabei.</p>
+      </div>
+      <a class="btn btn--outline" routerLink="/galerie">Zur Galerie</a>
+    </div>
+    @defer (on viewport; hydrate on viewport) {
+      <div class="gallery-teaser__grid">
+        @for (pet of highlights; track pet.src; let i = $index) {
+          <app-pet-photo
+            [image]="pet"
+            [tilt]="i % 2 ? 2 : -2"
+            sizes="(min-width: 64rem) 15vw, 45vw"
+          />
+        }
+      </div>
+    } @placeholder {
+      <div class="gallery-teaser__grid gallery-teaser__grid--placeholder" aria-hidden="true">
+        @for (pet of highlights; track pet.src) {
+          <div class="ghost"></div>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<app-cta-band />

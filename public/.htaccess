@@ -1,0 +1,70 @@
+# ─────────────────────────────────────────────────────────────
+#  Hund · Katze · Käfer – Apache configuration (shared hosting)
+#  Upload the contents of dist/hund-katze-kaefer/browser/ incl. this file.
+# ─────────────────────────────────────────────────────────────
+
+Options -Indexes
+DirectorySlash Off
+AddDefaultCharset UTF-8
+AddType application/manifest+json .webmanifest
+AddType image/svg+xml .svg
+
+ErrorDocument 404 /404/index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1) Always HTTPS and www
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ https://www.hund-katze-kaefer.de%{REQUEST_URI} [R=301,L]
+
+  # 2) Permanent redirects from the old 2018 URLs (keeps Google rankings and bookmarks)
+  RewriteRule ^index\.html?$ / [R=301,L]
+  RewriteRule ^ueber-mich-tierbetreuung\.htm$ /ueber-mich [R=301,L]
+  RewriteRule ^leistungen-tierbetreuung\.htm$ /leistungen [R=301,L]
+  RewriteRule ^ernaehrungsberatung-katzen\.htm$ /katzen-ernaehrungsberatung [R=301,L]
+  RewriteRule ^haustier-zertifikate\.htm$ /zertifikate [R=301,L]
+  RewriteRule ^galerie-tierbetreuung\.htm$ /galerie [R=301,L]
+  RewriteRule ^kontakt-tierbetreuung\.htm$ /kontakt [R=301,L]
+  RewriteRule ^impressum-tierbetreuung\.htm$ /impressum [R=301,L]
+  RewriteRule ^datenschutz-tierbetreuung\.htm$ /datenschutz [R=301,L]
+  RewriteRule ^PDF/AGB-Hund-Katze-Kaefer\.pdf$ /PDF/NEU2025AGB-Hund-Katze-Kaefer.pdf [R=301,L]
+
+  # 3) Canonical URLs without trailing slash
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+  # 4) Serve the prerendered page for clean URLs: /leistungen → /leistungen/index.html
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.+)$ /$1/index.html [L]
+</IfModule>
+
+# ── Compression ──────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/manifest+json image/svg+xml
+</IfModule>
+
+# ── Caching ──────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  # Hashed build files (main-XYZ.js, styles-XYZ.css, fonts) never change
+  <FilesMatch "-[A-Z0-9]{8}\.(js|css)$|\.woff2$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Photos and documents
+  <FilesMatch "\.(jpe?g|png|webp|avif|svg|pdf|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  # HTML always fresh
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  # ── Security headers ───────────────────────────────────────
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  # Enable once HTTPS works reliably on all subdomains:
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>

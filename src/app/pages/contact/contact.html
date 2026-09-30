@@ -1,0 +1,225 @@
+<app-page-intro
+  heading="Kontakt"
+  lead="Fragen, Wunschtermine oder gleich ein Auftrag: Am besten erreichen Sie mich per Telefon oder E-Mail. Hinterlassen Sie gern Ihre Nummer – ich rufe zurück."
+/>
+
+<div class="container contact">
+  <aside class="contact__info" aria-label="Kontaktdaten">
+    <ul class="channels">
+      <li>
+        <app-icon name="phone" />
+        <div>
+          <span class="channels__label">Mobil</span>
+          <a class="channels__value" [href]="site.phone.href">{{ site.phone.display }}</a>
+        </div>
+      </li>
+      <li>
+        <app-icon name="mail" />
+        <div>
+          <span class="channels__label">E-Mail</span>
+          <app-email-link class="channels__value" subject="Anfrage Tierbetreuung" />
+        </div>
+      </li>
+      <li>
+        <app-icon name="pin" />
+        <div>
+          <span class="channels__label">Einsatzgebiet</span>
+          <span class="channels__value">{{ site.serviceArea }}</span>
+        </div>
+      </li>
+    </ul>
+
+    <section class="good-to-know" aria-labelledby="gtk-heading">
+      <h2 id="gtk-heading">Gut zu wissen</h2>
+      <ul class="checklist">
+        <li>
+          <app-icon name="check" />
+          <span
+            ><strong>Steuerlich absetzbar:</strong> Die Tierbetreuung bei Ihnen zu Hause können Sie
+            als haushaltsnahe Dienstleistung angeben.</span
+          >
+        </li>
+        <li>
+          <app-icon name="check" />
+          <span
+            ><strong>Rundum versichert:</strong> Sie beauftragen eine professionelle, offizielle
+            Tierbetreuung.</span
+          >
+        </li>
+        <li>
+          <app-icon name="check" />
+          <span
+            ><strong>Unverbindliches Kennenlernen:</strong> Vor dem ersten Auftrag lernen wir uns
+            bei Ihnen zu Hause kennen.</span
+          >
+        </li>
+      </ul>
+    </section>
+
+    <section class="docs" aria-labelledby="docs-heading">
+      <h2 id="docs-heading">Unterlagen</h2>
+      <ul>
+        <li>
+          <a [href]="site.documents.terms" target="_blank" rel="noopener">
+            <app-icon name="download" /> AGB zur Tierbetreuung (PDF)
+          </a>
+        </li>
+        <li>
+          <a [href]="site.documents.inquiry" target="_blank" rel="noopener">
+            <app-icon name="download" /> Anfrageformular zum Ausfüllen (PDF)
+          </a>
+        </li>
+      </ul>
+    </section>
+  </aside>
+
+  <section id="anfrage" class="inquiry" aria-labelledby="inquiry-heading">
+    <h2 id="inquiry-heading">Anfrage vorbereiten</h2>
+    <p class="inquiry__intro">
+      Füllen Sie die Felder aus – daraus entsteht eine fertige E-Mail an mich, die Sie in Ihrem
+      E-Mail-Programm prüfen und absenden.
+    </p>
+
+    @if (status() === 'opened') {
+      <div class="notice notice--success" role="status">
+        <app-icon name="check" />
+        <p>
+          Ihr E-Mail-Programm sollte sich jetzt mit der vorbereiteten Nachricht geöffnet haben. Hat
+          das nicht geklappt? Dann rufen Sie mich an unter
+          <a [href]="site.phone.href">{{ site.phone.display }}</a> oder schreiben Sie direkt an
+          <app-email-link subject="Anfrage Tierbetreuung" />.
+        </p>
+      </div>
+    }
+    @if (status() === 'invalid' && form.invalid) {
+      <div class="notice notice--error" role="alert">
+        <p>Bitte prüfen Sie die markierten Felder.</p>
+      </div>
+    }
+
+    <form #formEl [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
+      <div class="field">
+        <label for="f-name">Ihr Name <span class="req">(Pflichtfeld)</span></label>
+        <input
+          id="f-name"
+          type="text"
+          formControlName="name"
+          autocomplete="name"
+          [attr.aria-invalid]="invalid('name')"
+          [attr.aria-describedby]="invalid('name') ? 'e-name' : null"
+        />
+        @if (invalid('name')) {
+          <p class="error" id="e-name">Bitte geben Sie Ihren Namen an.</p>
+        }
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f-email">E-Mail <span class="req">(Pflichtfeld)</span></label>
+          <input
+            id="f-email"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            inputmode="email"
+            [attr.aria-invalid]="invalid('email')"
+            [attr.aria-describedby]="invalid('email') ? 'e-email' : null"
+          />
+          @if (invalid('email')) {
+            <p class="error" id="e-email">
+              Bitte geben Sie eine gültige E-Mail-Adresse an, z. B. name&#64;beispiel.de.
+            </p>
+          }
+        </div>
+        <div class="field">
+          <label for="f-phone">Telefon <span class="opt">(für Rückruf)</span></label>
+          <input
+            id="f-phone"
+            type="tel"
+            formControlName="phone"
+            autocomplete="tel"
+            inputmode="tel"
+            [attr.aria-invalid]="invalid('phone')"
+            [attr.aria-describedby]="invalid('phone') ? 'e-phone' : null"
+          />
+          @if (invalid('phone')) {
+            <p class="error" id="e-phone">
+              Bitte nur Ziffern, Leerzeichen und + / ( ) - verwenden.
+            </p>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-service">Worum geht es?</label>
+        <select id="f-service" formControlName="service">
+          @for (option of serviceOptions; track option) {
+            <option [value]="option">{{ option }}</option>
+          }
+        </select>
+      </div>
+
+      <fieldset class="field" formGroupName="animals">
+        <legend>Welche Tiere leben bei Ihnen?</legend>
+        <div class="chips">
+          @for (animal of animalOptions; track animal.key) {
+            <label class="chip">
+              <input type="checkbox" [formControlName]="animal.key" />
+              <span>{{ animal.label }}</span>
+            </label>
+          }
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend>Zeitraum <span class="opt">(falls schon bekannt)</span></legend>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-from">von</label>
+            <input id="f-from" type="date" formControlName="from" />
+          </div>
+          <div class="field">
+            <label for="f-to">bis</label>
+            <input
+              id="f-to"
+              type="date"
+              formControlName="to"
+              [attr.aria-invalid]="rangeInvalid"
+              [attr.aria-describedby]="rangeInvalid ? 'e-range' : null"
+            />
+          </div>
+        </div>
+        @if (rangeInvalid) {
+          <p class="error" id="e-range">Das Enddatum liegt vor dem Startdatum.</p>
+        }
+      </fieldset>
+
+      <div class="field">
+        <label for="f-place">Ort oder Stadtteil</label>
+        <input id="f-place" type="text" formControlName="place" autocomplete="address-level2" />
+      </div>
+
+      <div class="field">
+        <label for="f-message">Ihre Nachricht</label>
+        <textarea
+          id="f-message"
+          rows="5"
+          formControlName="message"
+          placeholder="z. B. Name und Alter Ihres Tieres, Besonderheiten, Wunschzeiten"
+          [attr.aria-invalid]="invalid('message')"
+        ></textarea>
+      </div>
+
+      <div class="form__footer">
+        <button type="submit" class="btn btn--primary">
+          <app-icon name="mail" />
+          E-Mail erstellen
+        </button>
+        <p class="form__privacy">
+          Über diese Website werden keine Daten übertragen. Mehr dazu in der
+          <a routerLink="/datenschutz">Datenschutzerklärung</a>.
+        </p>
+      </div>
+    </form>
+  </section>
+</div>

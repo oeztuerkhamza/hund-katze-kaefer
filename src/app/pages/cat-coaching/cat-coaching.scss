@@ -1,0 +1,150 @@
+.why__grid,
+.focus__grid,
+.price__grid {
+  display: grid;
+  gap: var(--space-l) var(--space-xl);
+
+  @media (min-width: 56rem) {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+.why h2 {
+  max-width: 12ch;
+}
+
+.prose p:first-child {
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+/* ── Audiences ────────────────────────────────────────────── */
+
+.audiences h2 {
+  margin-bottom: var(--space-xl);
+}
+
+.audiences__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-l);
+
+  @media (min-width: 52rem) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  li {
+    display: grid;
+    align-content: start;
+    gap: var(--space-s);
+  }
+
+  app-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    padding: 0.8rem;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--forest);
+  }
+
+  p {
+    color: var(--ink-soft);
+  }
+}
+
+/* ── Focus: gut health ───────────────────────────────────── */
+
+.focus__grid {
+  @media (min-width: 56rem) {
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: start;
+  }
+}
+
+.focus__copy {
+  display: grid;
+  gap: var(--space-m);
+  max-width: var(--measure);
+}
+
+.focus__note {
+  padding: var(--space-s) var(--space-m);
+  border-left: 3px solid var(--ladybug);
+  background: var(--white);
+}
+
+.focus__courses {
+  display: grid;
+  gap: var(--space-s);
+  padding: var(--space-l);
+  border-radius: var(--radius-panel);
+  border: 1.5px solid var(--line);
+  background: var(--white);
+
+  h3 {
+    font-size: var(--step-0);
+    font-family: var(--font-body);
+    color: var(--ink-soft);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  li {
+    display: grid;
+    gap: 0.1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--forest-deep);
+  }
+
+  a {
+    font-weight: 700;
+  }
+}
+
+.focus__date {
+  font-weight: 400;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Price ────────────────────────────────────────────────── */
+
+.price {
+  padding-top: 0;
+}
+
+.price__grid {
+  align-items: center;
+  padding-top: var(--space-2xl);
+  border-top: 1px solid var(--line);
+
+  @media (min-width: 56rem) {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+
+  app-price-tag {
+    --hole: var(--paper);
+  }
+}
+
+.price__copy {
+  display: grid;
+  gap: var(--space-m);
+  max-width: var(--measure);
+}
+
+.price__academy {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}

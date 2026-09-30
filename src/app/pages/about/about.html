@@ -1,0 +1,90 @@
+<header class="intro">
+  <div class="container intro__grid">
+    <div class="intro__copy">
+      <h1>Hallo, ich bin Karin Käfer</h1>
+      <p class="lead">
+        Ich lebe in Freiburg und teile mein Zuhause mit drei Katzen. Bei meinem Nachnamen läge ein
+        Beruf mit Tieren nahe – mein Weg dorthin führte allerdings über die Logistik.
+      </p>
+      <p>
+        Aufgewachsen bin ich mit Kaninchen, Hamstern, Meerschweinchen, Vögeln, Katzen und Hunden.
+        Heute kümmere ich mich beruflich um die Tiere anderer Menschen – und bilde mich stetig
+        weiter, vor allem rund um die Katze.
+      </p>
+    </div>
+    <div class="intro__cats">
+      @for (cat of cats; track cat.src; let i = $index) {
+        <app-pet-photo
+          [image]="cat"
+          [tilt]="[-3, 4, -2][i]"
+          [priority]="i === 0"
+          sizes="(min-width: 60rem) 18vw, 40vw"
+        />
+      }
+    </div>
+  </div>
+</header>
+
+<section class="section path" aria-labelledby="path-heading">
+  <div class="container path__grid">
+    <div class="path__intro">
+      <h2 id="path-heading">Mein Weg</h2>
+      <p>
+        Die Logistik habe ich nicht ganz hinter mir gelassen. Wer Ihnen Ihre Tiere anvertraut
+        bekommt, trägt Verantwortung: Alles muss geplant sein, Zeiten müssen stimmen, und jedes Tier
+        soll Aufmerksamkeit, Zeit und Zuneigung bekommen. Schließlich geht es um Lebewesen.
+      </p>
+    </div>
+    <ol class="timeline">
+      @for (step of timeline; track step.title) {
+        <li>
+          <span class="timeline__when">{{ step.when }}</span>
+          <div>
+            <h3>{{ step.title }}</h3>
+            @if (step.text) {
+              <p>{{ step.text }}</p>
+            }
+            @if (step.link) {
+              <p><a routerLink="/zertifikate">Alle Zertifikate ansehen</a></p>
+            }
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="section section--sage values" aria-labelledby="values-heading">
+  <div class="container">
+    <h2 id="values-heading">Darauf können Sie sich verlassen</h2>
+    <ul class="values__list">
+      @for (v of values; track v.title) {
+        <li>
+          <app-icon name="check" />
+          <div>
+            <h3>{{ v.title }}</h3>
+            <p>{{ v.text }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="section welfare" aria-labelledby="welfare-heading">
+  <div class="container welfare__inner">
+    <app-icon name="heart" class="welfare__icon" />
+    <div>
+      <h2 id="welfare-heading">Engagement für den Tierschutz</h2>
+      <p>
+        Seit einigen Jahren setze ich mich für Tierrechte ein und unterstütze kleinere Vereine,
+        soweit ich kann – zum Beispiel die
+        <a [href]="site.links.catRescue" target="_blank" rel="noopener"
+          >Katzen-Not-Hilfe Breisgau e. V.</a
+        >
+      </p>
+    </div>
+  </div>
+</section>
+
+<app-cta-band />

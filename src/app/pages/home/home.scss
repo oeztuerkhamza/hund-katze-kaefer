@@ -1,0 +1,448 @@
+/* ── Hero ─────────────────────────────────────────────────── */
+
+.hero {
+  padding-block: var(--space-xl) var(--space-2xl);
+  overflow-x: clip;
+}
+
+.hero__grid {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+
+  @media (min-width: 60rem) {
+    grid-template-columns: 1.05fr 1fr;
+    gap: var(--space-l);
+  }
+}
+
+.hero__copy {
+  display: grid;
+  gap: var(--space-m);
+  justify-items: start;
+
+  h1 {
+    max-width: 14ch;
+  }
+
+  .line {
+    display: block;
+  }
+
+  .lead {
+    max-width: 40ch;
+  }
+
+  .btn-row {
+    margin-top: var(--space-xs);
+  }
+}
+
+.hero__place {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.85rem 0.3rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--sage);
+  color: var(--forest-deep);
+  font-weight: 700;
+  font-size: var(--step--1);
+
+  app-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--ladybug);
+  }
+}
+
+.hero__facts {
+  list-style: none;
+  margin: var(--space-s) 0 0;
+  padding: var(--space-m) 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--ink-soft);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  app-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--forest);
+  }
+}
+
+/* The photo wall: pictures pinned like on a fridge door. */
+.hero__wall {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+
+  .hero__pet {
+    width: 34%;
+    margin-inline: -1.5%;
+    animation: pin 0.7s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 110ms + 120ms);
+
+    &:nth-child(2) {
+      margin-top: 1.5rem;
+      z-index: 1;
+    }
+
+    &:nth-child(n + 4) {
+      display: none;
+    }
+  }
+
+  @media (min-width: 40rem) {
+    display: block;
+    aspect-ratio: 1 / 0.92;
+    padding: 0;
+
+    .hero__pet {
+      position: absolute;
+      margin: 0;
+
+      &:nth-child(n) {
+        display: block;
+      }
+      &:nth-child(1) {
+        left: 0;
+        top: 3%;
+        width: 52%;
+      }
+      &:nth-child(2) {
+        left: 57%;
+        top: 0;
+        width: 40%;
+        margin-top: 0;
+      }
+      &:nth-child(3) {
+        left: 7%;
+        top: 63%;
+        width: 32%;
+      }
+      &:nth-child(4) {
+        left: 43%;
+        top: 49%;
+        width: 34%;
+      }
+      &:nth-child(5) {
+        left: 80%;
+        top: 66%;
+        width: 21%;
+      }
+    }
+  }
+}
+
+@keyframes pin {
+  from {
+    opacity: 0;
+    translate: 0 -1.25rem;
+    scale: 1.06;
+  }
+}
+
+/* ── Section heads ────────────────────────────────────────── */
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--space-m);
+  margin-bottom: var(--space-xl);
+
+  p {
+    margin-top: var(--space-xs);
+    color: var(--ink-soft);
+    max-width: 50ch;
+  }
+
+  > a:not(.btn) {
+    font-weight: 700;
+  }
+}
+
+/* ── Why at home ──────────────────────────────────────────── */
+
+.why__grid {
+  display: grid;
+  gap: var(--space-xl);
+
+  @media (min-width: 56rem) {
+    grid-template-columns: 1fr 1.1fr;
+    align-items: start;
+  }
+}
+
+.why__intro {
+  display: grid;
+  gap: var(--space-m);
+
+  p {
+    max-width: 46ch;
+  }
+}
+
+.why__extras {
+  padding: var(--space-m);
+  border-radius: var(--radius-panel);
+  border: 1.5px dashed var(--sage-deep);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+
+  strong {
+    color: var(--forest-deep);
+  }
+}
+
+.why__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-m);
+    padding-block: var(--space-m);
+    border-top: 1px solid var(--line);
+
+    &:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
+  app-icon {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.7rem;
+    border-radius: 50%;
+    background: var(--sage);
+    color: var(--forest);
+  }
+
+  p {
+    margin-top: 0.25rem;
+    color: var(--ink-soft);
+  }
+}
+
+/* ── Services ─────────────────────────────────────────────── */
+
+.services__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-l);
+
+  @media (min-width: 52rem) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+}
+
+.service {
+  display: grid;
+  align-content: start;
+  gap: var(--space-s);
+
+  @media (min-width: 52rem) {
+    padding-inline: var(--space-l);
+    border-left: 1px solid var(--sage-deep);
+
+    &:first-child {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+
+  h3 a {
+    color: var(--forest-deep);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  p {
+    color: var(--ink-soft);
+  }
+}
+
+.service__icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0.75rem;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--forest);
+}
+
+/* ── Cat coaching band ────────────────────────────────────── */
+
+.coaching {
+  padding-block: var(--space-2xl);
+  background: var(--forest-deep);
+  color: rgb(255 255 255 / 0.88);
+
+  h2 {
+    color: var(--white);
+  }
+}
+
+.coaching__grid {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+
+  @media (min-width: 56rem) {
+    grid-template-columns: 1.3fr 1fr;
+  }
+}
+
+.coaching__copy {
+  display: grid;
+  gap: var(--space-m);
+  justify-items: start;
+
+  > p {
+    max-width: 48ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .checklist app-icon {
+    color: var(--brass);
+  }
+
+  .btn-row {
+    align-items: center;
+    margin-top: var(--space-xs);
+  }
+}
+
+.coaching__link {
+  color: var(--white);
+  font-weight: 700;
+}
+
+/* ── About teaser ─────────────────────────────────────────── */
+
+.about__grid {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+
+  @media (min-width: 56rem) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about__cats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-m);
+  padding-bottom: 1rem;
+
+  app-pet-photo:nth-child(2) {
+    translate: 0 1.5rem;
+  }
+}
+
+.about__copy {
+  display: grid;
+  gap: var(--space-m);
+  justify-items: start;
+
+  p {
+    max-width: 48ch;
+  }
+}
+
+/* ── Steps ────────────────────────────────────────────────── */
+
+.steps h2 {
+  margin-bottom: var(--space-xl);
+}
+
+.steps__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-l);
+  counter-reset: none;
+
+  @media (min-width: 40rem) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 64rem) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-xs);
+  }
+
+  p {
+    color: var(--ink-soft);
+  }
+}
+
+.steps__num {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: var(--space-xs);
+  border-radius: 50%;
+  border: 2px solid var(--forest);
+  font-family: var(--font-display);
+  font-weight: 750;
+  font-size: 1.35rem;
+  color: var(--forest);
+  background: var(--paper);
+}
+
+/* ── Gallery teaser ───────────────────────────────────────── */
+
+.gallery-teaser__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-l) var(--space-m);
+  padding-bottom: 1rem;
+
+  @media (min-width: 48rem) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 72rem) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.ghost {
+  aspect-ratio: 1;
+  border-radius: var(--radius-photo);
+  background: var(--sage);
+}

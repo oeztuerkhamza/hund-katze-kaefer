@@ -1,0 +1,78 @@
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="brand" routerLink="/">
+        <app-ladybug class="brand__bug" />
+        <span class="brand__name">Hund Katze Käfer</span>
+      </a>
+      <p>
+        Liebevolle Tierbetreuung bei Ihnen zu Hause und zertifizierte Ernährungsberatung für Katzen
+        in {{ site.serviceArea }}.
+      </p>
+      <figure class="quote">
+        <blockquote>
+          <p>„Unmenschen gibt es, aber keine Untiere.“</p>
+        </blockquote>
+        <figcaption>Karl Julius Weber</figcaption>
+      </figure>
+    </div>
+
+    <div>
+      <h2 class="footer__heading">Kontakt</h2>
+      <ul class="footer__list">
+        <li>
+          <app-icon name="phone" />
+          <a [href]="site.phone.href">{{ site.phone.display }}</a>
+        </li>
+        <li>
+          <app-icon name="mail" />
+          <app-email-link subject="Anfrage Tierbetreuung" />
+        </li>
+        <li>
+          <app-icon name="pin" />
+          <span>{{ site.address.zip }} {{ site.address.cityShort }} und Umgebung</span>
+        </li>
+      </ul>
+    </div>
+
+    <nav aria-label="Seiten">
+      <h2 class="footer__heading">Seiten</h2>
+      <ul class="footer__list footer__list--plain">
+        <li><a routerLink="/">Startseite</a></li>
+        @for (item of nav; track item.path) {
+          <li>
+            <a [routerLink]="item.path">{{ item.label }}</a>
+          </li>
+        }
+        <li><a routerLink="/kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="footer__heading">Downloads</h2>
+      <ul class="footer__list">
+        <li>
+          <app-icon name="file" />
+          <a [href]="site.documents.terms" target="_blank" rel="noopener">AGB (PDF)</a>
+        </li>
+        <li>
+          <app-icon name="file" />
+          <a [href]="site.documents.inquiry" target="_blank" rel="noopener"
+            >Anfrageformular (PDF)</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© {{ year }} {{ site.legalName }}</p>
+    <ul class="footer__legal">
+      @for (item of legal; track item.path) {
+        <li>
+          <a [routerLink]="item.path">{{ item.label }}</a>
+        </li>
+      }
+    </ul>
+  </div>
+</footer>
