@@ -1,5 +1,9 @@
 name: Deploy to GitHub Pages
 
+# Yayınlanan site: www.hund-katze-kaefer.de sitesinin orijinal hali
+# (original-site/ klasöründeki statik dosyalar, sunucudan geldiği gibi).
+# Angular sürümünü yayınlamak için: "Deploy Angular preview" workflow'unu elle çalıştır.
+
 on:
   push:
     branches: [main]
@@ -15,27 +19,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build -- --configuration production,github-pages
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/hund-katze-kaefer/browser
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: original-site
       - id: deployment
         uses: actions/deploy-pages@v4

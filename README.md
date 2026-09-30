@@ -44,12 +44,31 @@ Bu üç klasörün canlı sitedeki kopyası (131 fotoğraf, 21 sertifika, 2 PDF)
 yerelde ve GitHub Pages önizlemesinde fotoğraflar bu sayede görünür. Bir fotoğraf dosyası yoksa site
 kırık resim yerine pati simgeli bir yer tutucu gösterir.
 
-## GitHub Pages önizlemesi
+## GitHub Pages'te ne yayınlanıyor?
 
-`main` dalına her push'ta `.github/workflows/deploy.yml` siteyi build edip
-https://oeztuerkhamza.github.io/hund-katze-kaefer/ adresine yayınlar. Bu build `github-pages`
-konfigürasyonunu kullanır (`angular.json`): base href `/hund-katze-kaefer/` olur ve tüm sayfalar
-`noindex` alır, böylece önizleme asıl alan adıyla Google'da yarışmaz. Yerelde denemek için:
+**Şu an yayında olan: sitenin orijinal hali.** `original-site/` klasörü,
+www.hund-katze-kaefer.de adresindeki eski statik sitenin sunucudan geldiği gibi alınmış tam bir
+kopyasıdır (9 `.htm` sayfa, Galerie/Pix/Bilder/Design2 görselleri, PDF'ler, Zertifikate, lytebox ve
+jssor slider dosyaları). Hiçbir dosyanın içeriği değiştirilmedi.
+
+`main` dalına her push'ta `.github/workflows/deploy.yml` bu klasörü olduğu gibi
+https://oeztuerkhamza.github.io/hund-katze-kaefer/ adresine yayınlar (build yok).
+
+Sadece iki ek dosya var, ikisi de içeriğe dokunmaz:
+
+- `index.html` — `index.htm` dosyasının bayt bayt aynı kopyası. GitHub Pages dizin açılışında
+  `index.html` aradığı için gerekli; Apache'de bu işi `DirectoryIndex` yapıyordu.
+- `.nojekyll` — GitHub'ın dosyaları Jekyll ile işlemesini kapatır.
+
+Orijinalde de kırık olan `Pix/a17.png` ve `Pix/loading.gif` referansları canlı sunucuda da 404
+döndüğü için aynen bırakıldı.
+
+### Angular sürümünü yayınlamak
+
+Angular 20 yeniden yapımı repoda duruyor. Yayınlamak için GitHub → Actions →
+**Deploy Angular preview** workflow'unu elle çalıştır. Bu build `github-pages` konfigürasyonunu
+kullanır (`angular.json`): base href `/hund-katze-kaefer/` olur ve tüm sayfalar `noindex` alır.
+Yerelde denemek için:
 
 ```bash
 npm run build -- --configuration production,github-pages
